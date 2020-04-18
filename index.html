@@ -1,21 +1,81 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="style.css">
 		<script src="./jquery-3.4.1.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
 		<script type="text/javascript" src="./app.js"></script>
 	</head>
 
 	<body>
-		<div id="score">
-			<label for="lblScore">SCORE:</label>
-			<input id="lblScore" type="text" />
+		<div id="header">
+			<h2 class="title">pacman</h2>
 		</div>
-		<div id="time">
-			<label for="lblTime">TIME:</label>
-			<input id="lblTime" type="text" />
+		<div id="menu">
+			<div class="divLabel"><label class="menuLabel" onclick="showDiv('welcome')">Welcome</label></div>
+			<div class="divLabel"><label class="menuLabel" onclick="showDiv('register')">Register</label></div>
+			<div class="divLabel"><label class="menuLabel" onclick="showDiv('login')">Login</label></div>
+			<div class="divLabel"><label class="menuLabel" onclick="showDiv('about')">About</label></div>
+			<div class="divLabel"><label class="menuLabel" onclick="showDiv('gameBoard')">game</label></div>
 		</div>
-		<div id="game">
-			<canvas id="canvas" height="600" width="600"></canvas>
+		<div id="content">
+			<div id="gameBoard">
+				<div id="score">
+					<label for="lblScore">SCORE:</label>
+					<input id="lblScore" type="text" />
+				</div>
+				<div id="time">
+					<label for="lblTime">TIME:</label>
+					<input id="lblTime" type="text" />
+				</div>
+				<div id="game">
+					<canvas id="canvas" height="600" width="600"></canvas>
+				</div>
+			</div>
+			<div id="welcome">
+				<button id="signUp" onclick="showDiv('register')">Sign up</button>
+				<button id="loginB" onclick="showDiv('login')">Login</button>
+			</div>
+			<div id="register">
+				<form id="register-form">
+					<p>
+						<label>username:</label>
+						<input id="usernameR" name="usernameR" type="text"/>
+					</p>
+					<p>
+						<label>password:</label>
+						<input id="passwordR" name="passwordR" type="password"/>
+					</p>
+					<p>
+						<label>first name:</label>
+						<input id="firstName" name="firstName" type="text"/>
+					</p>
+					<p>
+						<label>last name:</label>
+						<input id="lastName" name="lastName" type="text"/>
+					</p>
+					<p>
+						<label>email:</label>
+						<input id="email" name="email" type="text"/>
+					</p>
+					<p>
+						<label>birthday:</label>
+						<input id="birthday" name="birthday" type="date"/>
+					</p>
+					<p id="pregister">
+						<input id="submitR" name="submitR" type="submit" value="submit"/>
+					</p>
+				</form>
+			</div>
+			<div id="login">
+				login
+			</div>
+			<div id="about">
+				about
+			</div>
+		</div>
+		<div id="footer">
+			<footer>footer</footer>
 		</div>
 	</body>
 </html>

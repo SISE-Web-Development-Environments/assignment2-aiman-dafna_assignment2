@@ -1,16 +1,114 @@
 var context;
 var shape = new Object();
+var users = [];
 var board;
 var score;
 var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var divs = ["gameBoard", "welcome", "register", "login", "about"]
+
+$.validator.addMethod("checkPassword", function(value){
+		return (/\d/.test(value) && /^[A-Za-z0-9\d=!\-@._*]+$/.test(value) && (/[a-z]/.test(value) || /[A-Z]/.test(value)))
+	}
+);
+
+$.validator.addMethod("onlyLetters", function(value){
+	return /^[A-Za-z]+$/i.test(value); 
+}
+);
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
+	var userA = new Object();
+	userA.username = "p";
+	userA.password = "p";
+	userA.firstName = "p";
+	userA.lastName = "p";
+	userA.email = "p";
+	userA.birthday = "p";
+	users.push(userA);
+	for(var i = 0; i < divs.length; i++){
+		document.getElementById(divs[i]).style.display="none";
+	}
+	document.getElementById("welcome").style.display="block";
+	$("#register-form").validate({
+		errorPlacement: function errorPlacement(error, element) { element.after(error); },
+		rules: {
+			usernameR: {
+				required: true
+			},
+			passwordR: {
+				required: true,
+				checkPassword: true,
+				minlength: 6
+			},
+			firstName: {
+				required: true,
+				onlyLetters: true
+			},
+			lastName: {
+				required: true,
+				onlyLetters: true
+			},
+			email: {
+				required: true,
+				email: true
+			},
+			birthday: {
+				required: true
+			}
+		},
+		messages: {
+			usernameR: {
+				required: "Please enter your username"
+			},
+			passwordR: {
+				required: "Please enter your password",
+				checkPassword: "Your password must contain letters and numbers",
+				minlength: "Your password must contain at least 6 characters"
+			},
+			firstName: {
+				required: "Please enter your first name",
+				onlyLetters: "name must contain only letters"
+			},
+			lastName: {
+				required: "Please enter your last name",
+				onlyLetters: "name must contain only letters"
+			},
+			email: {
+				required: "Please enter your email",
+				email: "Please enter a valid email"
+			},
+			birthday: {
+				required: "Please enter your birthday"
+			}
+		}
+	});
+	$('#register-form').submit(function (e) {
+		e.preventDefault();
+		if ($('#register-form').valid()){
+			var newUser = new Object();
+			newUser.username = document.getElementById("usernameR").value;
+			newUser.password = document.getElementById("passwordR").value;
+			newUser.firstName = document.getElementById("firstName").value;
+			newUser.lastName = document.getElementById("lastName").value;
+			newUser.email = document.getElementById("email").value;
+			newUser.birthday = document.getElementById("birthday").value;
+			users.push(newUser);
+		}
+	});
 	Start();
 });
+
+function showDiv(divName){
+	for(var i = 0; i < divs.length; i++){
+		document.getElementById(divs[i]).style.display="none";
+	}
+	var selected = document.getElementById(divName);
+	selected.style.display="block";
+}
 
 function Start() {
 	board = new Array();

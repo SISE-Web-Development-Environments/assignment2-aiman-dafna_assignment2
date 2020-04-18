@@ -1,0 +1,72 @@
+#header {
+    width: 100%;
+    text-align: center;
+}
+
+#menu{
+    height: 30px;
+
+}
+
+.menuLabel{
+    vertical-align: middle;
+    font-size: medium;
+}
+
+.divLabel{
+    width: 10%;
+    height: 30px;
+    text-align: center;
+    float: left;
+}
+
+.divLabel:hover{
+    background-color: rgba(128, 128, 128, 0.678);
+}
+
+#welcom{
+    width: 100%;
+    text-align: center;
+}
+
+#signUp{
+    float: left;
+    top: 50%;
+    width: 8%;
+    margin-left: 35%;
+    margin-right: 5%;
+    margin-top: 20%;
+}
+
+
+#pregister{
+    text-align: center;
+}
+
+#register-form{
+    margin-top: 5%;
+}
+#register label{
+    margin-right: 2%;
+    margin-left: 40%;
+}
+
+#submitR{
+    width: 8%;
+    margin-left: 46%;
+    margin-right: 46%;
+}
+
+#loginB{
+    float: left;
+    top: 50%;
+    width: 8%;
+    margin-left: 5%;
+    margin-right: 35%;
+    margin-top: 20%;
+}
+
+#content{
+    width: 100%;
+    height: 800px;
+}
