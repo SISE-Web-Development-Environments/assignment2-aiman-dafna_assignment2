@@ -38,7 +38,14 @@
     margin-top: 20%;
 }
 
-
+#login{
+    margin-top: 5%;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
 #pregister{
     text-align: center;
 }
@@ -46,6 +53,7 @@
 #register-form{
     margin-top: 5%;
 }
+
 #register label{
     margin-right: 2%;
     margin-left: 40%;
