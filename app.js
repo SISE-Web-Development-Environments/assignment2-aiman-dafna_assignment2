@@ -24,10 +24,7 @@ $(document).ready(function() {
 	var userA = new Object();
 	userA.username = "p";
 	userA.password = "p";
-	userA.firstName = "p";
-	userA.lastName = "p";
-	userA.email = "p";
-	userA.birthday = "p";
+
 	users.push(userA);
 	for(var i = 0; i < divs.length; i++){
 		document.getElementById(divs[i]).style.display="none";
@@ -92,16 +89,38 @@ $(document).ready(function() {
 			var newUser = new Object();
 			newUser.username = document.getElementById("usernameR").value;
 			newUser.password = document.getElementById("passwordR").value;
-			newUser.firstName = document.getElementById("firstName").value;
-			newUser.lastName = document.getElementById("lastName").value;
-			newUser.email = document.getElementById("email").value;
-			newUser.birthday = document.getElementById("birthday").value;
+
 			users.push(newUser);
 		}
 	});
 	Start();
 });
-
+function new_register(usernameR,passwordR,firstName,lastName,email,birthday){
+	var newUser=new Object();
+	newUser.username = document.getElementById("usernameR").value;
+	newUser.password = document.getElementById("passwordR").value;
+	users.push(newUser);
+}
+//LOGIN
+function loginUser(){
+	var username,password,user;
+	username = $("#usernameR").val();
+	password = $("#passwordR").val();
+	for(var i=0;i<users.length;i++){
+		if(users[i].username===username){
+			if(user.passwordR===password){
+				//display('settings')
+				showDiv("gameBoard")
+			}
+			else{
+				window.alert("wrong password")
+			}
+		}
+		else{
+			window.alert("user not exist")
+		}
+	}
+}
 function showDiv(divName){
 	for(var i = 0; i < divs.length; i++){
 		document.getElementById(divs[i]).style.display="none";
