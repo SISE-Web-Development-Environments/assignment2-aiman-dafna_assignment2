@@ -36,6 +36,7 @@
 				<button id="signUp" onclick="showDiv('register')">Sign up</button>
 				<button id="loginB" onclick="showDiv('login')">Login</button>
 			</div>
+			<!--
 			<div id="register">
 				<form action="/action_page.php" id="register-form">
 					<label for="usernameR">Username:</label>
@@ -54,7 +55,8 @@
 					<input id="submitR" type="button" onclick="showDiv('gameBoard')" value="Login as Admin" name="submitR">
 				</form>
 			</div>
-			<!--
+			-->
+			<div id="register">
 				<form id="register-form">
 					<p>
 						<label>username:</label>
@@ -81,26 +83,23 @@
 						<input id="birthday" name="birthday" type="date"/>
 					</p>
 					<p id="pregister">
-						<input id="submitR" type="button" onclick="new_register(usernameR,passwordR,firstName,lastName,email,birthday)" name="submitR" type="submit" value="submit"/>
+						<input id="submitR" name="submitR" type="submit" value="submit"/>
 					</p>
 				</form>
 			</div>
-			-->
 			<div id="login">
 				<form id="loginGame" action="/action_page.php0">
-					<label for="usernameR">Userame<span class="req">*</span></label>
-					<input id="usernameR" name="usernameR" type="text"/><br><br>
-					<label for="passwordR">Password<span class="req">*</span></label>
-					<input id="passwordR" name="passwordR" type="password"/><br><br>
-					<input id="submitR" type="button" onclick="loginUser()" value="Login" name="submitR">
+					<label for="usernameL">Userame<span class="req">*</span></label>
+					<input id="usernameL" name="usernameR" type="text"/><br><br>
+					<label for="passwordL">Password<span class="req">*</span></label>
+					<input id="passwordL" name="passwordR" type="password"/><br><br>
+					<input id="submitL" type="button" onclick="loginUser()" value="Login" name="submitR">
 				</form>
 			</div>
 			<div id="about">
 				about
 			</div>
-			<div id="footer">
-				<footer>footer</footer>
-			</div>
+		</div>
 			<!-- <div id="Settings">
 				<form id="Settings-game">
 					<p>
@@ -130,6 +129,8 @@
 					</form>
 				</form>
 			</div> -->
+		<div id="footer">
+			<footer>footer</footer>
 		</div>
 	</body>
 </html>

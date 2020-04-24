@@ -104,21 +104,24 @@ function new_register(usernameR,passwordR,firstName,lastName,email,birthday){
 //LOGIN
 function loginUser(){
 	var username,password,user;
-	username = $("#usernameR").val();
-	password = $("#passwordR").val();
+	username = $("#usernameL").val();
+	password = $("#passwordL").val();
+	var userExist = false;
 	for(var i=0;i<users.length;i++){
-		if(users[i].username===username){
-			if(user.passwordR===password){
+		if(users[i].username === username){
+			if(users[i].password === password){
 				//display('settings')
-				showDiv("gameBoard")
+				showDiv("gameBoard");
+				userExist = true;
 			}
 			else{
 				window.alert("wrong password")
+				break;
 			}
 		}
-		else{
-			window.alert("user not exist")
-		}
+	}
+	if(!userExist){
+		window.alert("wrong username")
 	}
 }
 function showDiv(divName){
