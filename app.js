@@ -7,7 +7,7 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
-var divs = ["gameBoard", "welcome", "register", "login", "about"]
+var divs = ["settings","gameBoard", "welcome", "register", "login", "about"]
 
 $.validator.addMethod("checkPassword", function(value){
 		return (/\d/.test(value) && /^[A-Za-z0-9\d=!\-@._*]+$/.test(value) && (/[a-z]/.test(value) || /[A-Z]/.test(value)))
@@ -89,8 +89,8 @@ $(document).ready(function() {
 			var newUser = new Object();
 			newUser.username = document.getElementById("usernameR").value;
 			newUser.password = document.getElementById("passwordR").value;
-
 			users.push(newUser);
+			sign_up_success();
 		}
 	});
 	Start();
@@ -110,8 +110,7 @@ function loginUser(){
 	for(var i=0;i<users.length;i++){
 		if(users[i].username === username){
 			if(users[i].password === password){
-				//display('settings')
-				showDiv("gameBoard");
+				showDiv("settings");
 				userExist = true;
 			}
 			else{
@@ -124,6 +123,14 @@ function loginUser(){
 		window.alert("wrong username")
 	}
 }
+$(document).ready(function() {
+	document.getElementById('timeGame').value = getRndInteger(0,61);
+	document.getElementById('quantity').value = getRndInteger(50,91);
+	document.getElementById('NumbersOfMonsters').value=getRndInteger(1,5);
+});
+function getRndInteger(min, max) {
+	return Math.floor(Math.random() * (max - min) ) + min;
+}
 function showDiv(divName){
 	for(var i = 0; i < divs.length; i++){
 		document.getElementById(divs[i]).style.display="none";
@@ -131,7 +138,17 @@ function showDiv(divName){
 	var selected = document.getElementById(divName);
 	selected.style.display="block";
 }
-
+function showGame(divName){
+	var selected = document.getElementById(divName);
+	selected.style.display="block";
+}
+function sign_up_success(){
+	window.alert("successed!")
+}
+function stopTimer()
+{
+   window.clearInterval( intervalTimer );
+} 
 function Start() {
 	board = new Array();
 	score = 0;
