@@ -81,27 +81,73 @@
 			<div id="settings">
 				<form id="Settings-game">
 					<form action="/action_page.php">
-						<label for="quantity">Numbers of balls (between 50 and 90):</label>
-						<input type="number" id="quantity" name="quantity" min="50" max="90">
-						
+						<label for="demo">button up:</label>
+						<input type="text" size="10" onkeydown="updateUpButton(event)">
+						<p id="demo1"></p>
 					</form>
 					<form action="/action_page.php">
-						<label for="colors">Choose a color of the ball:</label>
+						<label for="demo">button down:</label>
+						<input type="text" size="10" onkeydown="updateDownButton(event)">
+						<p id="demo2"></p>
+					</form>
+					<form action="/action_page.php">
+						<label for="demo">button right:</label>
+						<input type="text" size="10" onkeydown="updateRightButton(event)">
+						<p id="demo3"></p>
+					</form>
+					<form action="/action_page.php">
+						<label for="demo">button left:</label>
+						<input type="text" size="10" onkeydown="updateLeftButton(event)">
+						<p id="demo4"></p>
+					</form>
+					<form action="/action_page.php">
+						<label for="quantity">Numbers of balls (between 50 and 90):</label>
+						<input type="number" id="quantity" name="quantity" min="50" max="90">
+					</form><br>
+					<form action="/action_page.php">
+						<label for="colors">Choose a color for the 5 points ball:</label>
 						<select id="colors" name="colors">
 							<option value="red">Red</option>
 							<option value="black">Blue</option>
 							<option value="blue">Black</option>
+							<option value="blue">Green</option>
+							<option value="blue">Yellow</option>
+							<option value="blue">Orange</option>
+							<option value="blue">Grey</option>
 						</select>
-					</form>
+					</form><br>
 					<form action="/action_page.php">
-						<label for="timeGame">Time (between 0 and 60):</label>
-						<input type="number" id="timeGame" name="timeGame" min="0" max="60">
-					
-					</form>
+						<label for="colors">Choose a color for the 15 points ball:</label>
+						<select id="colors" name="colors">
+							<option value="red">Red</option>
+							<option value="black">Blue</option>
+							<option value="blue">Black</option>
+							<option value="blue">Green</option>
+							<option value="blue">Yellow</option>
+							<option value="blue">Orange</option>
+							<option value="blue">Grey</option>
+						</select>
+					</form><br>
+					<form action="/action_page.php">
+						<label for="colors">Choose a color for the 25 points ball:</label>
+						<select id="colors" name="colors">
+							<option value="red">Red</option>
+							<option value="black">Blue</option>
+							<option value="blue">Black</option>
+							<option value="blue">Green</option>
+							<option value="blue">Yellow</option>
+							<option value="blue">Orange</option>
+							<option value="blue">Grey</option>
+						</select>
+					</form><br>
+					<form action="/action_page.php">
+						<label for="timeGame">Time (minemum 60):</label>
+						<input type="number" id="timeGame" name="timeGame" min="60">
+					</form><br>
 					<form action="/action_page.php">
 						<label for="NumbersOfMonsters">Numbers of monsters (between 1 and 4):</label>
 						<input type="number" id="NumbersOfMonsters" name="NumbersOfMonsters" min="1" max="4">
-					</form>
+					</form><br>
 					<input id="startGame" type="button" onclick="showGame('gameBoard')" value="start" name="startGame">
 				</form>
 			</div>
