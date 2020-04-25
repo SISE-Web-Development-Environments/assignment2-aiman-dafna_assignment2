@@ -8,7 +8,7 @@ var start_time;
 var time_elapsed;
 var interval;
 var divs = ["settings","gameBoard", "welcome", "register", "login", "about"]
-
+var buttonsKeyboard={Up:"ArrowUp",Down:"ArrowDown",Right:"ArrowRight",Left:"ArrowLeft"};
 $.validator.addMethod("checkPassword", function(value){
 		return (/\d/.test(value) && /^[A-Za-z0-9\d=!\-@._*]+$/.test(value) && (/[a-z]/.test(value) || /[A-Z]/.test(value)))
 	}
@@ -124,12 +124,30 @@ function loginUser(){
 	}
 }
 $(document).ready(function() {
-	document.getElementById('timeGame').value = getRndInteger(0,61);
+	document.getElementById('timeGame').value = getRndInteger(60,180);
 	document.getElementById('quantity').value = getRndInteger(50,91);
 	document.getElementById('NumbersOfMonsters').value=getRndInteger(1,5);
 });
 function getRndInteger(min, max) {
 	return Math.floor(Math.random() * (max - min) ) + min;
+}
+function updateUpButton(event) {
+	var x = event.key;
+	document.getElementById("demo1").innerHTML = "The pressed key was: " + x;
+	buttonsKeyboard.Up=x
+}
+function updateDownButton(event) {
+	var x = event.key;
+	document.getElementById("demo2").innerHTML = "The pressed key was: " + x;
+	buttonsKeyboard.Down=x
+}function updateRightButton(event) {
+	var x = event.key;
+	document.getElementById("demo3").innerHTML = "The pressed key was: " + x;
+	buttonsKeyboard.Right=x
+}function updateLeftButton(event) {
+	var x = event.key;
+	document.getElementById("demo4").innerHTML = "The pressed key was: " + x;
+	buttonsKeyboard.Left=x
 }
 function showDiv(divName){
 	for(var i = 0; i < divs.length; i++){
