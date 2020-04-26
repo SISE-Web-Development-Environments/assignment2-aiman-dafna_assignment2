@@ -7,8 +7,10 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var lives;//new
 var divs = ["settings","gameBoard", "welcome", "register", "login", "about"]
 var buttonsKeyboard={Up:"ArrowUp",Down:"ArrowDown",Right:"ArrowRight",Left:"ArrowLeft"};
+var counterBalls5,counterBalls15,counterBalls25;
 $.validator.addMethod("checkPassword", function(value){
 		return (/\d/.test(value) && /^[A-Za-z0-9\d=!\-@._*]+$/.test(value) && (/[a-z]/.test(value) || /[A-Z]/.test(value)))
 	}
@@ -170,6 +172,10 @@ function stopTimer()
 function Start() {
 	board = new Array();
 	score = 0;
+	lives=1;//new
+	counterBalls5=0;//new
+	counterBalls15=0;//new
+	counterBalls25=0;//new
 	pac_color = "yellow";
 	var cnt = 100;
 	var food_remain = 50;
@@ -255,6 +261,7 @@ function GetKeyPressed() {
 function Draw() {
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
+	lblLives.value=lives;
 	lblTime.value = time_elapsed;
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
@@ -272,9 +279,54 @@ function Draw() {
 				context.fillStyle = "black"; //color
 				context.fill();
 			} else if (board[i][j] == 1) {
-				context.beginPath();
-				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
+			//	context.beginPath();
+			//	context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				var x = document.getElementById("myColor5").value;
+				var y = document.getElementById("myColor15").value;
+				var z = document.getElementById("myColor25").value;
+				if(counterBalls5<30){
+					//ballsColor5++;
+					context.beginPath();
+        			context.fillStyle = x;
+       				context.strokeStyle = "black";
+        			context.font = "13px Georgia";
+        			context.lineWidth = 10;
+        			context.arc(center.x,center.y, 8, 0, 2 * Math.PI);
+        			context.fill();
+        			context.beginPath();
+        			context.fillStyle = "white";
+        			context.fillText("5", center.x-1,center.y+1);
+        			context.fill();
+				}
+				else if(counterBalls15<15){
+					//ballsColor15++;
+					context.beginPath();
+        			context.fillStyle = y;
+       				context.strokeStyle = "black";
+        			context.font = "17px Georgia";
+        			context.lineWidth = 10;
+        			context.arc(center.x,center.y,12, 0, 2 * Math.PI);
+        			context.fill();
+        			context.beginPath();
+        			context.fillStyle = "white";
+        			context.fillText("15", center.x-6,center.y+1);
+        			context.fill();
+				}
+				else if(counterBalls25<5){
+					//ballsColor25++;
+					context.beginPath();
+        			context.fillStyle = z;
+       				context.strokeStyle = "black";
+        			context.font = "20px Georgia";
+        			context.lineWidth = 10;
+        			context.arc(center.x,center.y,15, 0, 2 * Math.PI);
+        			context.fill();
+        			context.beginPath();
+        			context.fillStyle = "white";
+        			context.fillText("25", center.x-10,center.y+3);
+        			context.fill();
+				}
+				//context.fillStyle = "black"; //color
 				context.fill();
 			} else if (board[i][j] == 4) {
 				context.beginPath();
@@ -311,6 +363,9 @@ function UpdatePosition() {
 	}
 	if (board[shape.i][shape.j] == 1) {
 		score++;
+		if(lives<5){  //newww
+			lives++;
+		}
 	}
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
