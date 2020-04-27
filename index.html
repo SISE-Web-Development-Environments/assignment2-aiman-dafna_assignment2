@@ -9,7 +9,14 @@
 
 	<body>
 		<div id="header">
-			<h2 class="title">pacman</h2>
+			<div class="logo">
+				<img src="logo.png"  height="80" width="450">
+			</div>
+			<div class="names">
+				<label class="nameLabel">Dafna cordoval</label>
+				<br />
+				<label class="nameLabel">Aiman</label>
+			</div>
 		</div>
 		<div id="menu">
 			<div class="divLabel"><label class="menuLabel" onclick="showDiv('welcome')">Welcome</label></div>
@@ -19,20 +26,15 @@
 		</div>
 		<div id="content">
 			<div id="gameBoard">
-				<div id="score">
 					<label for="lblScore">SCORE:</label>
 					<input id="lblScore" type="text" />
-				</div>
-				<div id="time">
 					<label for="lblTime">TIME:</label>
 					<input id="lblTime" type="text" />
-				</div>
-				<div id="lives">
 					<label for="lblLives">LIVES:</label>
 					<input id="lblLives" type="text" />
-				</div>
+					<input id="resetB" type="button" onclick="reset()" value="Reset game"/>
 				<div id="game">
-					<canvas id="canvas" height="600" width="600"></canvas>
+					<canvas id="canvas" height="500" width="1250"></canvas>
 				</div>
 			</div>
 			<div id="welcome">
@@ -84,47 +86,46 @@
 			</div>
 			<div id="settings">
 				<form id="Settings-game">
-					<form action="/action_page.php">
-						<label for="demo">button up:</label>
-						<input type="text" size="10" onkeydown="updateUpButton(event)">
-						<p id="demo1"></p>
-					</form>
-					<form action="/action_page.php">
-						<label for="demo">button down:</label>
-						<input type="text" size="10" onkeydown="updateDownButton(event)">
-						<p id="demo2"></p>
-					</form>
-					<form action="/action_page.php">
-						<label for="demo">button right:</label>
-						<input type="text" size="10" onkeydown="updateRightButton(event)">
-						<p id="demo3"></p>
-					</form>
-					<form action="/action_page.php">
-						<label for="demo">button left:</label>
-						<input type="text" size="10" onkeydown="updateLeftButton(event)">
-						<p id="demo4"></p>
-					</form>
-					<form action="/action_page.php">
-						<label for="quantity">Numbers of balls (between 50 and 90):</label>
-						<input type="number" id="quantity" name="quantity" min="50" max="90">
-					</form><br>
-					Choose a color for the 5 points ball:<input type="color" id="myColor5" value="#ff0080"><br><br>
-					Choose a color for the 15 points ball:<input type="color" id="myColor15" value="#ff0080"><br><br>
-					Choose a color for the 25 points ball:<input type="color" id="myColor25" value="#ff0080"><br><br>
-					<form action="/action_page.php">
-						<label for="timeGame">Time (minemum 60):</label>
-						<input type="number" id="timeGame" name="timeGame" min="60">
-					</form><br>
-					<form action="/action_page.php">
-						<label for="NumbersOfMonsters">Numbers of monsters (between 1 and 4):</label>
-						<input type="number" id="NumbersOfMonsters" name="NumbersOfMonsters" min="1" max="4">
-					</form><br>
-					<input id="startGame" type="button" onclick="showGame('gameBoard')" value="start" name="startGame">
+					<label for="demo">button up:</label>
+					<input type="text" id="upKey" size="10" onkeydown="updateUpButton(event)">
+					<p id="demo1"></p>
+					<label for="demo">button down:</label>
+					<input type="text" id="downKey" size="10" onkeydown="updateDownButton(event)">
+					<p id="demo2"></p>
+					<label for="demo">button right:</label>
+					<input type="text" id="rightKey" size="10" onkeydown="updateRightButton(event)">
+					<p id="demo3"></p>
+					<label for="demo">button left:</label>
+					<input type="text" id="leftKey" size="10" onkeydown="updateLeftButton(event)">
+					<p id="demo4"></p>
+					<label for="quantity">Numbers of balls (between 50 and 90):</label>
+					<input type="number" id="quantity" name="quantity">
+					<p></p>
+					<label> a color for the 5 points ball:</label>
+					<input type="color" id="myColor5" value="#1153ee">
+					<p></p>
+					<label> a color for the 15 points ball:</label>
+					<input type="color" id="myColor15" value="#41fd02">
+					<p></p>
+					<label> a color for the 25 points ball:</label>
+					<input type="color" id="myColor25" value="#ff0000">
+					<p></p>
+					<label for="timeGame">Time (minemum 60):</label>
+					<input type="number" id="timeGame" name="timeGame">
+					<p></p>
+					<label for="NumbersOfMonsters">Numbers of monsters (between 1 and 4):</label>
+					<input type="number" id="NumbersOfMonsters" name="NumbersOfMonsters">
+					<p></p>
+					<input id="startGame" name="startGame" type="submit" value="Start game"/>
+					<input id="random"  type="button" value="Random values" onclick="randomValues()"/>
 				</form>
 			</div>
 		</div>
-		<!--<div id="footer">
-				<footer>footer</footer>
-			</div>-->
+		<div id="footer">
+				<footer>
+					This website was written in html5, javascript and css3.
+					<a href="mailto:cordoval@post.bgu.ac.il" target="_top">Email us</a>
+				</footer>
+		</div>
 	</body>
 </html>

@@ -1,16 +1,53 @@
-#header {
-    width: 100%;
-    text-align: center;
+body{
+    background-color: rgba(106, 243, 250, 0.212);
+    font-family: 'Verdana';
 }
 
-#menu{
-    height: 30px;
+.names{
+    flex: 1;
+    text-align: right;
+}
 
+.logo{
+    flex: 0 0 70%;
+    margin-left: 15%;
+}
+
+.nameLabel{
+    width: 100%;
+    margin-right: 3%;
+}
+
+#header {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    height: 80px;
+    margin: auto;
+}
+
+#footer{
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    bottom: 0;
+    background-color: rgb(166, 238, 241);
+    padding: 1%;
+}
+
+
+#menu{
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    height: 30px;
+    background-color: rgb(166, 238, 241);
 }
 
 .menuLabel{
-    vertical-align: middle;
+    vertical-align: bottom;
     font-size: medium;
+
 }
 
 .divLabel{
@@ -31,11 +68,17 @@
 
 #signUp{
     float: left;
-    top: 50%;
     width: 8%;
     margin-left: 35%;
     margin-right: 5%;
-    margin-top: 20%;
+    margin-top: 15%;
+    height: 40px;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(166, 238, 241);
+}
+
+#signUp:hover{
+    background-color: rgba(143, 143, 143, 0.164);
 }
 
 #login{
@@ -67,21 +110,36 @@
 
 #loginB{
     float: left;
-    top: 50%;
     width: 8%;
     margin-left: 5%;
     margin-right: 35%;
-    margin-top: 20%;
+    margin-top: 15%;
+    height: 40px;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(166, 238, 241);
+}
+
+#loginB:hover{
+    background-color: rgba(143, 143, 143, 0.164);
 }
 
 #content{
     width: 100%;
-    height: 800px;
+    height: 600px;
 }
 
 #settings{
-    position:absolute;
-    top:20;
-    right:0;
+    padding: 10px;
+    padding-top: 35px;
 }
-.divLabel {background-color: #555555;}
+
+#gameBoard{
+    position: absolute;
+    margin-top: 40px;
+    width:  100%;
+}
+
+canvas{
+    border: 2px solid rgb(166, 238, 241);
+    margin-top: 25px;
+}
