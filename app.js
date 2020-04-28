@@ -184,15 +184,6 @@ $(document).ready(function() {
 	});
 });
 
-/*
-function new_register(usernameR,passwordR,firstName,lastName,email,birthday){
-	var newUser=new Object();
-	newUser.username = document.getElementById("usernameR").value;
-	newUser.password = document.getElementById("passwordR").value;
-	users.push(newUser);
-}
-*/
-
 //LOGIN
 function loginUser(){
 	var username,password,user;
@@ -482,7 +473,7 @@ function Draw() {
 				context.fillStyle = pac_color; //color
 				context.fill();
 				context.beginPath();
-				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
+				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle 
 				context.fillStyle = "black"; //color
 				context.fill();
 			} else if (board[i][j] == 1) {
@@ -653,4 +644,62 @@ function UpdatePosition() {
 	else {
 		Draw();
 	}
+}
+function updatePacman(){
+	if (board[i][j] == 31) {
+		context.beginPath();
+		context.arc(center.x, center.y, 25, 0.15 * Math.PI, 1.85 * Math.PI); // half right
+		context.lineTo(center.x, center.y);
+		context.fillStyle = pac_color; //color
+		context.fill();
+		context.beginPath();
+		context.fillStyle = "black"; //color
+		context.fill();
+	}
+	else if (board[i][j] == 32) {
+		context.beginPath();
+		context.arc(center.x, center.y, 25, 1.15 * Math.PI,  0.85* Math.PI); // half left
+		context.lineTo(center.x, center.y);
+		context.fillStyle = pac_color; //color
+		context.fill();
+		context.beginPath();
+		context.arc(center.x-5, center.y - 15, 5, 0, 2 * Math.PI); // circle left
+		context.fillStyle = "black"; //color
+		context.fill();
+	}
+	else if (board[i][j] == 33) {
+		context.beginPath();
+		context.arc(center.x, center.y, 25, 1.65 * Math.PI,  1.35* Math.PI); // half up
+		context.lineTo(center.x, center.y);
+		context.fillStyle = pac_color; //color
+		context.fill();
+		context.beginPath();
+		context.arc(center.x-15, center.y -5, 5, 0, 2 * Math.PI); // circle up
+		context.fillStyle = "black"; //color
+		context.fill();
+	}
+	else if (board[i][j] == 34) {
+		context.beginPath();
+		context.arc(center.x, center.y, 25, 0.65 * Math.PI,  0.35* Math.PI); // half down
+		context.lineTo(center.x, center.y);
+		context.fillStyle = pac_color; //color
+		context.fill();
+		context.beginPath();
+		context.arc(center.x+15, center.y + 5, 5, 0, 2 * Math.PI); // circle down
+		context.fillStyle = "black"; //color
+		context.fill();
+	}
+}
+function medicine(){
+	context.beginPath();
+	context.fillStyle = "white";
+	context.font = "13px Georgia";
+	context.lineWidth = 10;
+	context.arc(center.x,center.y, 15, 0, 2 * Math.PI);
+	context.fill();
+	context.beginPath();
+	context.fillStyle = "black";
+	context.font = "8px Verdana";
+	context.fillText("M", center.x - 2, center.y + 3);
+	context.fill();
 }
