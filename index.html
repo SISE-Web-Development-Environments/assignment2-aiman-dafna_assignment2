@@ -18,6 +18,9 @@
 				<label class="nameLabel">Ayman Sayed Ahmad</label>
 			</div>
 		</div>
+		<audio id="myAudio">
+			<source src="startSounds.mp3" type="audio/mpeg">
+		</audio>
 		<div id="menu">
 			<div class="divLabel"><label class="menuLabel" onclick="showDiv('welcome')">Welcome</label></div>
 			<div class="divLabel"><label class="menuLabel" onclick="showDiv('register')">Register</label></div>
@@ -26,15 +29,39 @@
 		</div>
 		<div id="content">
 			<div id="gameBoard">
-					<label>Hello,</label>
-					<label id="user"></label>
-					<label for="lblScore">Score:</label>
-					<input id="lblScore" type="text" />
-					<label for="lblTime">Time:</label>
-					<input id="lblTime" type="text" />
-					<label for="lblLives">Lives:</label>
-					<input id="lblLives" type="text" />
-					<input id="resetB" type="button" onclick="reset()" value="Reset game"/>
+				<label>Hello,</label>
+				<label id="user"></label>
+				<label for="lblScore">Score:</label>
+				<input id="lblScore" type="text" />
+				<label for="lblTime">Time:</label>
+				<input id="lblTime" type="text" />
+				<label for="lblLives">Lives:</label>
+				<input id="lblLives" type="text"/>
+				<input id="resetB" type="button" onclick="reset()" value="Reset game"/>
+				<!--<div class="controlSound">
+					<img src="audio-icon-mute.png" id="mute">
+				</div>
+				<div class="description nomobile">
+					<span id="audio">
+						<audio id="theme" preload="auto">
+							<source src="wav/theme.wav" type="audio/wav">
+							<source src="mp3/theme.mp3" type="audio/mpeg">
+						</audio>
+						<audio id="waka" preload="auto">
+							<source src="wav/waka.wav" type="audio/wav">
+							<source src="mp3/waka.mp3" type="audio/mpeg">
+						</audio>
+						<audio id="die" preload="auto">
+							<source src="wav/die.wav" type="audio/wav">
+							<source src="mp3/die.mp3" type="audio/mpeg">
+						</audio>
+						<audio id="powerpill" preload="auto">
+							<source src="wav/powerpill.wav" type="audio/wav">
+							<source src="mp3/powerpill.mp3" type="audio/mpeg">
+						</audio>
+					</span>
+				</div>-->
+			
 				<div id="game">
 					<canvas id="canvas" height="500" width="1250"></canvas>
 				</div>
@@ -118,7 +145,7 @@
 					<label for="NumbersOfMonsters">Numbers of monsters (between 1 and 4):</label>
 					<input type="number" id="NumbersOfMonsters" name="NumbersOfMonsters">
 					<p></p>
-					<input id="startGame" name="startGame" type="submit" value="Start game"/>
+					<input id="startGame" name="startGame" type="submit" value="Start game" onclick="playAudio()"/>
 					<input id="random"  type="button" value="Random values" onclick="randomValues()"/>
 				</form>
 			</div>
