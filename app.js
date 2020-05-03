@@ -25,6 +25,9 @@ var beginPoint = new Object();
 var divs = ["settings", "gameBoard", "welcome", "register", "login", "about"]
 var buttonsKeyboard = {Up: 38, Down: 40, Right: 39, Left: 37};
 var counterBalls5,counterBalls15,counterBalls25;
+var mySound;
+var myMusic;
+var deathSound;
 $.validator.addMethod("checkPassword", function(value){
 		return (/\d/.test(value) && /^[A-Za-z0-9\d=!\-@._*]+$/.test(value) && (/[a-z]/.test(value) || /[A-Z]/.test(value)))
 	}
@@ -311,8 +314,25 @@ function sign_up_success(){
 function stopTimer(){
 	window.clearInterval(interval);
 } 
-
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.pause();
+    }    
+}
 function Start() {
+	myMusic = new sound("startSounds.mp3");
+	mySound=new sound("WAKA.mp3");
+	deathSound = new sound("DeathSound.mp3");
+	myMusic.play();
 	maxPoints = 0;
 	moveMonster = 0;
 	pacMove = 4;
@@ -325,10 +345,10 @@ function Start() {
 	pac = 0;
 	board = new Array();
 	score = 0;
-	lives = 5;//new
-	counterBalls5=0;//new
-	counterBalls15=0;//new
-	counterBalls25=0;//new
+	lives = 5;
+	counterBalls5=0;
+	counterBalls15=0;
+	counterBalls25=0;
 	pac_color = "yellow";
 	var cnt = 250;
 	var food_remain = numberOfBalls;
@@ -610,6 +630,7 @@ function UpdatePosition() {
 				monsters[i].j = 0;
 			}
 		}
+		deathSound.play();
 		lives--;
 		moveMonster = 0;
 		score -= 10;
@@ -638,12 +659,15 @@ function UpdatePosition() {
 		}
 	}
 	if (board[shape.i][shape.j] == 1) {
+		mySound.play();
 		score += 5;
 	}
 	else if (board[shape.i][shape.j] == 5) {
+		mySound.play();
 		score += 15;
 	}
 	else if (board[shape.i][shape.j] == 6) {
+		mySound.play();
 		score += 25;
 	}
 	board[shape.i][shape.j] = 2;
@@ -659,6 +683,7 @@ function UpdatePosition() {
 		}
 	}
 	if(lives == 0){
+		deathSound.play();
 		stopTimer();
 		Draw();
 		window.alert("Loser!");
@@ -672,53 +697,7 @@ function UpdatePosition() {
 		Draw();
 	}
 }
-/*
-function updatePacman(){
-	if (board[i][j] == 31) {
-		context.beginPath();
-		context.arc(center.x, center.y, 25, 0.15 * Math.PI, 1.85 * Math.PI); // half right
-		context.lineTo(center.x, center.y);
-		context.fillStyle = pac_color; //color
-		context.fill();
-		context.beginPath();
-		context.fillStyle = "black"; //color
-		context.fill();
-	}
-	else if (board[i][j] == 32) {
-		context.beginPath();
-		context.arc(center.x, center.y, 25, 1.15 * Math.PI,  0.85* Math.PI); // half left
-		context.lineTo(center.x, center.y);
-		context.fillStyle = pac_color; //color
-		context.fill();
-		context.beginPath();
-		context.arc(center.x-5, center.y - 15, 5, 0, 2 * Math.PI); // circle left
-		context.fillStyle = "black"; //color
-		context.fill();
-	}
-	else if (board[i][j] == 33) {
-		context.beginPath();
-		context.arc(center.x, center.y, 25, 1.65 * Math.PI,  1.35* Math.PI); // half up
-		context.lineTo(center.x, center.y);
-		context.fillStyle = pac_color; //color
-		context.fill();
-		context.beginPath();
-		context.arc(center.x-15, center.y -5, 5, 0, 2 * Math.PI); // circle up
-		context.fillStyle = "black"; //color
-		context.fill();
-	}
-	else if (board[i][j] == 34) {
-		context.beginPath();
-		context.arc(center.x, center.y, 25, 0.65 * Math.PI,  0.35* Math.PI); // half down
-		context.lineTo(center.x, center.y);
-		context.fillStyle = pac_color; //color
-		context.fill();
-		context.beginPath();
-		context.arc(center.x+15, center.y + 5, 5, 0, 2 * Math.PI); // circle down
-		context.fillStyle = "black"; //color
-		context.fill();
-	}
-}
-*/
+
 function medicine(){
 	context.beginPath();
 	context.fillStyle = "white";
