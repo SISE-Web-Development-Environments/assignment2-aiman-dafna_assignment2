@@ -7,16 +7,20 @@ var score;
 var pac_color;
 var start_time;
 var time_elapsed;
-var interval;
+var intervstart_timeal;
 var lives;//new
 var numberOfBalls;
 var numberOfMonsters;
 var time;
+var pac;
+var pacMove;
+var pacmanImg = [];
 var ball5;
 var ball15;
 var ball25;
 var maxPoints;
 var moveMonster;
+var userConnected;
 var beginPoint = new Object();
 var divs = ["settings", "gameBoard", "welcome", "register", "login", "about"]
 var buttonsKeyboard = {Up: 38, Down: 40, Right: 39, Left: 37};
@@ -165,6 +169,7 @@ $(document).ready(function() {
 			newUser.username = document.getElementById("usernameR").value;
 			newUser.password = document.getElementById("passwordR").value;
 			users.push(newUser);
+			userConnected = newUser.username;
 			sign_up_success();
 		}
 	});
@@ -194,6 +199,7 @@ function loginUser(){
 		if(users[i].username === username){
 			userExist = true;
 			if(users[i].password === password){
+				userConnected = username;
 				showDiv("settings");
 			}
 			else{
@@ -303,13 +309,20 @@ function sign_up_success(){
 }
 
 function stopTimer(){
-   window.clearInterval( intervalTimer );
+	window.clearInterval(interval);
 } 
 
 function Start() {
 	maxPoints = 0;
 	moveMonster = 0;
+	pacMove = 4;
 	monsters = [];
+	for(var i = 0; i < 5; i++){
+		var pacman = new Image();
+		pacman.src = "pac" + i + ".gif";
+		pacmanImg.push(pacman);
+	}
+	pac = 0;
 	board = new Array();
 	score = 0;
 	lives = 5;//new
@@ -321,7 +334,7 @@ function Start() {
 	var food_remain = numberOfBalls;
 	var pacman_remain = 1;
 	start_time = new Date();
-	for (var i = 0; i < 25; i++) {
+	for (i = 0; i < 25; i++) {
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 10; j++) {
@@ -452,11 +465,13 @@ function GetKeyPressed() {
 }
 
 function reset(){
-	window.clearInterval(interval);
+	stopTimer();
 	showDiv("settings");
 }
 
 function Draw() {
+	document.getElementById("user").innerHTML = userConnected;
+	pac++;
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblLives.value = lives;
@@ -467,15 +482,24 @@ function Draw() {
 			center.x = i * 50 + 25;
 			center.y = j * 50 + 25;
 			if (board[i][j] == 2) {
-				context.beginPath();
-				context.arc(center.x, center.y, 25, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
-				context.lineTo(center.x, center.y);
-				context.fillStyle = pac_color; //color
-				context.fill();
-				context.beginPath();
-				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle 
-				context.fillStyle = "black"; //color
-				context.fill();
+				context.save();
+				context.translate(shape.i * 50 + 25, shape.j * 50 + 25);
+				if(pacMove == 1){
+					context.rotate(- Math.PI / 2);
+					context.drawImage(pacmanImg[pac % 5],-20,-20);
+				}
+				else if(pacMove == 2) {
+					context.rotate( Math.PI / 2);
+					context.drawImage(pacmanImg[pac % 5], -20, -20);
+				}
+				else if(pacMove == 3) {
+					context.rotate( Math.PI);
+					context.drawImage(pacmanImg[pac % 5], -20, -20);
+				}
+				else if(pacMove == 4) {
+					context.drawImage(pacmanImg[pac % 5], -20, -20);
+				}
+				context.restore();
 			} else if (board[i][j] == 1) {
 				context.beginPath();
 				context.fillStyle = ball5;
@@ -568,6 +592,9 @@ function moveMonsters(){
 function UpdatePosition() {
 	board[shape.i][shape.j] = 0;
 	var x = GetKeyPressed();
+	if(x){
+		pacMove = x;
+	}
 	moveMonster++;
 	if(moveMonster % 8 == 0){
 		moveMonsters();
@@ -623,7 +650,7 @@ function UpdatePosition() {
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
 	if(Math.floor(time - time_elapsed) == 0){
-		window.clearInterval(interval);
+		stopTimer();
 		if(score < 100){
 			window.alert("You are better than " + score + " points!");
 		}
@@ -632,19 +659,20 @@ function UpdatePosition() {
 		}
 	}
 	if(lives == 0){
-		window.clearInterval(interval);
+		stopTimer();
 		Draw();
 		window.alert("Loser!");
 	}
 	if (score >= maxPoints) {
 		window.alert("Game completed");
-		window.clearInterval(interval);
+		stopTimer();
 		Draw();
 	} 
 	else {
 		Draw();
 	}
 }
+/*
 function updatePacman(){
 	if (board[i][j] == 31) {
 		context.beginPath();
@@ -690,6 +718,7 @@ function updatePacman(){
 		context.fill();
 	}
 }
+*/
 function medicine(){
 	context.beginPath();
 	context.fillStyle = "white";

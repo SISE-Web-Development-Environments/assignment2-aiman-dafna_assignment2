@@ -143,3 +143,7 @@ canvas{
     border: 2px solid rgb(166, 238, 241);
     margin-top: 25px;
 }
+
+#user{
+    margin-right: 0.5%;
+}
