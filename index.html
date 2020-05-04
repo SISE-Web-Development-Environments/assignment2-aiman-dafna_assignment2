@@ -25,7 +25,7 @@
 			<div class="divLabel"><label class="menuLabel" onclick="showDiv('welcome')">Welcome</label></div>
 			<div class="divLabel"><label class="menuLabel" onclick="showDiv('register')">Register</label></div>
 			<div class="divLabel"><label class="menuLabel" onclick="showDiv('login')">Login</label></div>
-			<div class="divLabel"><label class="menuLabel" onclick="showDiv('about')">About</label></div>
+			<div class="divLabel"><label class="menuLabel" onclick="openAbout()">About</label></div>
 		</div>
 		<div id="content">
 			<div id="gameBoard">
@@ -38,32 +38,40 @@
 				<label for="lblLives">Lives:</label>
 				<input id="lblLives" type="text"/>
 				<input id="resetB" type="button" onclick="reset()" value="Reset game"/>
-				<!--<div class="controlSound">
-					<img src="audio-icon-mute.png" id="mute">
-				</div>
-				<div class="description nomobile">
-					<span id="audio">
-						<audio id="theme" preload="auto">
-							<source src="wav/theme.wav" type="audio/wav">
-							<source src="mp3/theme.mp3" type="audio/mpeg">
-						</audio>
-						<audio id="waka" preload="auto">
-							<source src="wav/waka.wav" type="audio/wav">
-							<source src="mp3/waka.mp3" type="audio/mpeg">
-						</audio>
-						<audio id="die" preload="auto">
-							<source src="wav/die.wav" type="audio/wav">
-							<source src="mp3/die.mp3" type="audio/mpeg">
-						</audio>
-						<audio id="powerpill" preload="auto">
-							<source src="wav/powerpill.wav" type="audio/wav">
-							<source src="mp3/powerpill.mp3" type="audio/mpeg">
-						</audio>
-					</span>
-				</div>-->
-			
 				<div id="game">
 					<canvas id="canvas" height="500" width="1250"></canvas>
+					<div id="showSettings">
+						<label>Button up:</label>
+						<label id="showUp">ArrowUp</label>
+						<p></p>
+						<label>Button down:</label>
+						<label id="showDown">ArrowDown</label>
+						<p></p>
+						<label>Button right:</label>
+						<label id="showRight">ArrowRight</label>
+						<p></p>
+						<label>Button left:</label>
+						<label id="showLeft">ArrowLeft</label>
+						<p></p>
+						<label>Numbers of balls:</label>
+						<label id="numBall"></label>
+						<p></p>
+						<label> Color of 5 points ball:</label>
+						<div class="color-box" id="5ball"></div>
+						<p></p>
+						<label> Color of 15 points ball:</label>
+						<div class="color-box" id="15ball"></div>
+						<p></p>
+						<label> Color of 25 points ball:</label>
+						<div class="color-box" id="25ball"></div>
+						<p></p>
+						<label>Time:</label>
+						<label id="showTime"></label>
+						<p></p>
+						<label>Numbers of monsters:</label>
+						<label id="showMonster"></label>
+						<p></p>
+					</div>
 				</div>
 			</div>
 			<div id="welcome">
@@ -110,8 +118,19 @@
 					<input id="submitL" type="button" onclick="loginUser()" value="Login" name="submitR">
 				</form>
 			</div>
-			<div id="about">
-				about
+			<div id="about" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closeAbout()">&times;</span>
+					<p>We used a JQuery plugin called validate, it validate user inputs from an html form.</p>
+					<p>We did not used a template</p>
+					<p>Some difficulties we came across in this assignment:</p>
+					<ol>
+						<ol>
+							<li>Understand the basic code given to us</li>
+							<li>Game and website design</li>
+						</ol>
+					</ol>
+				</div>
 			</div>
 			<div id="settings">
 				<form id="Settings-game">
@@ -145,7 +164,7 @@
 					<label for="NumbersOfMonsters">Numbers of monsters (between 1 and 4):</label>
 					<input type="number" id="NumbersOfMonsters" name="NumbersOfMonsters">
 					<p></p>
-					<input id="startGame" name="startGame" type="submit" value="Start game" onclick="playAudio()"/>
+					<input id="startGame" name="startGame" type="submit" value="Start game"/>
 					<input id="random"  type="button" value="Random values" onclick="randomValues()"/>
 				</form>
 			</div>

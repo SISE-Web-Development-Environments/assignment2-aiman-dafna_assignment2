@@ -12,7 +12,10 @@ var lives;//new
 var numberOfBalls;
 var numberOfMonsters;
 var time;
+var cherryEaten;
 var pac;
+var cherry;
+var cherryImg;
 var pacMove;
 var pacmanImg = [];
 var ball5;
@@ -28,6 +31,7 @@ var counterBalls5,counterBalls15,counterBalls25;
 var mySound;
 var myMusic;
 var deathSound;
+var interval;
 $.validator.addMethod("checkPassword", function(value){
 		return (/\d/.test(value) && /^[A-Za-z0-9\d=!\-@._*]+$/.test(value) && (/[a-z]/.test(value) || /[A-Z]/.test(value)))
 	}
@@ -229,6 +233,10 @@ function randomValues(){
 	buttonsKeyboard.Down = 40; 
 	buttonsKeyboard.Right = 39; 
 	buttonsKeyboard.Left = 37;
+	document.getElementById("showUp").innerHTML = "ArrowUp";
+	document.getElementById("showDown").innerHTML = "ArrowDown";
+	document.getElementById("showRight").innerHTML = "ArrowRight";
+	document.getElementById("showLeft").innerHTML = "ArrowLeft";
 	document.getElementById("upKey").value = "ArrowUp";
 	document.getElementById("downKey").value = "ArrowDown";
 	document.getElementById("rightKey").value = "ArrowRight";
@@ -277,28 +285,35 @@ function randomColor() {
 function updateUpButton(event) {
 	var x = event.key;
 	document.getElementById("upKey").value = x;
+	document.getElementById("showUp").innerHTML = x;
 	buttonsKeyboard.Up = event.keyCode;
 }
 
 function updateDownButton(event) {
 	var x = event.key;
 	document.getElementById("downKey").value = x;
+	document.getElementById("showDown").innerHTML = x;
 	buttonsKeyboard.Down = event.keyCode;
 }
 
 function updateRightButton(event) {
 	var x = event.key;
 	document.getElementById("rightKey").value = x;
+	document.getElementById("showRight").innerHTML = x;
 	buttonsKeyboard.Right = event.keyCode;
 }
 
 function updateLeftButton(event) {
 	var x = event.key;
 	document.getElementById("leftKey").value = x;
+	document.getElementById("showLeft").innerHTML = x;
 	buttonsKeyboard.Left = event.keyCode;
 }
 
 function showDiv(divName){
+	if(interval){
+		stopTimer();
+	}
 	for(var i = 0; i < divs.length; i++){
 		document.getElementById(divs[i]).style.display="none";
 	}
@@ -329,11 +344,20 @@ function sound(src) {
     }    
 }
 function Start() {
+	cherryEaten = false;
+	cherryImg = new Image();
+	cherryImg.src = "cherry.png";
 	myMusic = new sound("startSounds.mp3");
 	mySound=new sound("WAKA.mp3");
 	deathSound = new sound("DeathSound.mp3");
+	document.getElementById("5ball").style.background = ball5;
+	document.getElementById("15ball").style.background = ball15;
+	document.getElementById("25ball").style.background = ball25;
+	document.getElementById("numBall").innerHTML = numberOfBalls;
+	document.getElementById("showTime").innerHTML = time;
+	document.getElementById("showMonster").innerHTML = numberOfMonsters;
 	myMusic.play();
-	maxPoints = 0;
+	maxPoints = 50;
 	moveMonster = 0;
 	pacMove = 4;
 	monsters = [];
@@ -440,6 +464,16 @@ function Start() {
 		mon.img = new Image();
 		mon.img.src = "monster" + (i+1) + ".png";
 		monsters.push(mon);
+	}
+	var foundCherry = false;
+	cherry = new Object();
+	while(!foundCherry){
+		var emptyCell = findRandomEmptyCell(board);
+		if(!((emptyCell[1] == 0 || emptyCell[1] == 9 || emptyCell[0] == 0 || emptyCell[0] == 24))){
+			cherry.i = emptyCell[0];
+			cherry.j = emptyCell[1];
+			foundCherry = true;
+		}
 	}
 	keysDown = {};
 	addEventListener(
@@ -570,6 +604,9 @@ function Draw() {
 	for(i = 0; i < monsters.length; i++){
 		context.drawImage(monsters[i].img, monsters[i].i * 50 + 5, monsters[i].j *50 + 10);
 	}
+	if(!cherryEaten){
+		context.drawImage(cherryImg, cherry.i * 50 + 10, cherry.j * 50 + 5);
+	}
 }
 
 function checkMonsterCollision(x, y){
@@ -581,8 +618,50 @@ function checkMonsterCollision(x, y){
 	return false;
 }
 
+function openAbout(){
+	document.getElementById("about").style.display = "block";
+}
+
+function closeAbout(){
+	document.getElementById("about").style.display = "none";
+}
+
+$(document).keydown(function(event) { 
+	if (event.keyCode == 27) { 
+		document.getElementById("about").style.display = "none";
+	}
+});
+
+window.onclick = function(event) {
+	if (event.target == document.getElementById("about")) {
+		document.getElementById("about").style.display = "none";
+	}
+}
+
 function getPossibleMoves(x, y){
 	var moves = [];
+	if(x == shape.i){
+		var diff = y - shape.j;
+		if(diff >= 0 && board[x][y - 1] != 4){
+			moves.push({i: x, j: y - 1});
+			return moves;
+		}
+		else if(diff <= 0 && board[x][y + 1] != 4){
+			moves.push({i: x, j: y + 1});
+			return moves;
+		}
+	}
+	if(y == shape.j){
+		var diff = x - shape.i;
+		if(diff >= 0 && board[x - 1][y] != 4){
+			moves.push({i: x - 1, j: y});
+			return moves;
+		}
+		else if(diff <= 0 && board[x + 1][y] != 4){
+			moves.push({i: x + 1, j: y});
+			return moves;
+		}
+	}
 	if(x - 1 >= 0 && board[x - 1][y] != 4 && !checkMonsterCollision(x - 1, y)){
 		moves.push({i: x - 1, j: y});
 	}
@@ -609,6 +688,15 @@ function moveMonsters(){
 	}
 }
 
+function moveCherry(){
+	var moves = getPossibleMoves(cherry.i, cherry.j);
+	if(moves.length > 0){
+		var random = getRndInteger(0, moves.length);
+		cherry.i = moves[random].i;
+		cherry.j = moves[random].j;
+	}
+}
+
 function UpdatePosition() {
 	board[shape.i][shape.j] = 0;
 	var x = GetKeyPressed();
@@ -616,8 +704,9 @@ function UpdatePosition() {
 		pacMove = x;
 	}
 	moveMonster++;
-	if(moveMonster % 8 == 0){
+	if(moveMonster % 4 == 0){
 		moveMonsters();
+		moveCherry();
 	}
 	if(checkMonsterCollision(shape.i, shape.j)){
 		//todo
@@ -681,6 +770,10 @@ function UpdatePosition() {
 		else{
 			window.alert("Winner!!!");
 		}
+	}
+	if(!cherryEaten && cherry.i == shape.i && cherry.j == shape.j){
+		score += 50;
+		cherryEaten = true;
 	}
 	if(lives == 0){
 		deathSound.play();
