@@ -8,7 +8,7 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var intervstart_timeal;
-var lives;//new
+var lives;
 var numberOfBalls;
 var numberOfMonsters;
 var time;
@@ -220,14 +220,6 @@ function loginUser(){
 	}
 }
 
-/*
-$(document).ready(function() {
-	document.getElementById('timeGame').value = getRndInteger(60,180);
-	document.getElementById('quantity').value = getRndInteger(50,91);
-	document.getElementById('NumbersOfMonsters').value=getRndInteger(1,5);
-});
-*/
-
 function randomValues(){
 	buttonsKeyboard.Up = 38;
 	buttonsKeyboard.Down = 40; 
@@ -343,6 +335,7 @@ function sound(src) {
         this.sound.pause();
     }    
 }
+
 function Start() {
 	cherryEaten = false;
 	cherryImg = new Image();
@@ -452,7 +445,7 @@ function Start() {
 			beginPoint.j = emptyCell[1];
 		}
 	}
-	for(i = 0; i <numberOfMonsters; i++){
+	for(i = 0; i <numberOfMonsters-1; i++){
 		var mon = new Object()
 		mon.i = 24 * (i % 2);
 		if(i > 1){
@@ -475,6 +468,12 @@ function Start() {
 			foundCherry = true;
 		}
 	}
+	var dazzle=new Object();
+	dazzle.img = new Image();
+	dazzle.img.src = 'dazzled.svg';
+	dazzle.i=12;
+	dazzle.j=5;
+	monsters.push(dazzle);
 	keysDown = {};
 	addEventListener(
 		"keydown",
@@ -599,10 +598,29 @@ function Draw() {
 				context.fillStyle = "#a6eef1"; //color
 				context.fill();
 			}
+			else if(board[i][j]==7){
+				context.beginPath();
+				context.fillStyle = ball25;
+				context.strokeStyle = "black";
+				context.font = "13px Georgia";
+				context.lineWidth = 10;
+				context.arc(center.x,center.y, 8, 0, 2 * Math.PI);
+				context.fill();
+				context.beginPath();
+				context.fillStyle = "white";
+				context.font = "8px Verdana";
+				context.fillText("25", center.x - 5, center.y + 3);
+				context.fill();
+			}
 		}
 	}
 	for(i = 0; i < monsters.length; i++){
-		context.drawImage(monsters[i].img, monsters[i].i * 50 + 5, monsters[i].j *50 + 10);
+		if(i == monsters.length-1){
+			context.drawImage(monsters[i].img, monsters[i].i * 50 + 5, monsters[i].j *50 + 10,40,40);
+		}
+		else{
+			context.drawImage(monsters[i].img, monsters[i].i * 50 + 5, monsters[i].j *50 + 10);
+		}
 	}
 	if(!cherryEaten){
 		context.drawImage(cherryImg, cherry.i * 50 + 10, cherry.j * 50 + 5);
@@ -709,7 +727,11 @@ function UpdatePosition() {
 		moveCherry();
 	}
 	if(checkMonsterCollision(shape.i, shape.j)){
-		//todo
+		if(shape.i == monsters[monsters.length - 1].i && shape.j == monsters[monsters.length - 1].j){
+			lives--;
+			score-=10;
+			maxPoints -= 10;
+		}
 		for(i = 0; i < monsters.length; i++){
 			monsters[i].i = 24 * (i % 2);
 			if(i > 1){
@@ -762,6 +784,7 @@ function UpdatePosition() {
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
+	
 	if(Math.floor(time - time_elapsed) == 0){
 		stopTimer();
 		if(score < 100){
@@ -775,7 +798,7 @@ function UpdatePosition() {
 		score += 50;
 		cherryEaten = true;
 	}
-	if(lives == 0){
+	if(lives <= 0){
 		deathSound.play();
 		stopTimer();
 		Draw();
@@ -785,22 +808,9 @@ function UpdatePosition() {
 		window.alert("Game completed");
 		stopTimer();
 		Draw();
-	} 
+	}
 	else {
 		Draw();
 	}
 }
 
-function medicine(){
-	context.beginPath();
-	context.fillStyle = "white";
-	context.font = "13px Georgia";
-	context.lineWidth = 10;
-	context.arc(center.x,center.y, 15, 0, 2 * Math.PI);
-	context.fill();
-	context.beginPath();
-	context.fillStyle = "black";
-	context.font = "8px Verdana";
-	context.fillText("M", center.x - 2, center.y + 3);
-	context.fill();
-}
