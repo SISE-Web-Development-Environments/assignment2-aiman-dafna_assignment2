@@ -80,42 +80,78 @@
 			</div>
 			<div id="register">
 				<form id="register-form">
-					<p>
-						<label>username:</label>
-						<input id="usernameR" name="usernameR" type="text"/>
-					</p>
-					<p>
-						<label>password:</label>
-						<input id="passwordR" name="passwordR" type="password"/>
-					</p>
-					<p>
-						<label>first name:</label>
-						<input id="firstName" name="firstName" type="text"/>
-					</p>
-					<p>
-						<label>last name:</label>
-						<input id="lastName" name="lastName" type="text"/>
-					</p>
-					<p>
-						<label>email:</label>
-						<input id="email" name="email" type="text"/>
-					</p>
-					<p>
-						<label>birthday:</label>
-						<input id="birthday" name="birthday" type="date"/>
-					</p>
+					<div class="row">
+						<div class="left">
+							<label>Username:</label>
+						</div>
+						<div class="right">
+							<input id="usernameR" name="usernameR" type="text"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label>Password:</label>
+						</div>
+						<div class="right">
+							<input id="passwordR" name="passwordR" type="password"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label>First name:</label>
+						</div>
+						<div class="right">
+							<input id="firstName" name="firstName" type="text"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label>Last name:</label>
+						</div>
+						<div class="right">
+							<input id="lastName" name="lastName" type="text"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label>Email:</label>
+						</div>
+						<div class="right">
+							<input id="email" name="email" type="text"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label>Birthday:</label>
+						</div>
+						<div class="right">
+							<input id="birthday" name="birthday" type="date"/>
+						</div>
+					</div>
 					<p id="pregister">
 						<input id="submitR" name="submitR" type="submit" value="submit"/>
 					</p>
 				</form>
 			</div>
 			<div id="login">
-				<form id="loginGame" action="/action_page.php0">
-					<label for="usernameL">Userame<span class="req">*</span></label>
-					<input id="usernameL" name="usernameR" type="text"/><br><br>
-					<label for="passwordL">Password<span class="req">*</span></label>
-					<input id="passwordL" name="passwordR" type="password"/><br><br>
-					<input id="submitL" type="button" onclick="loginUser()" value="Login" name="submitR">
+				<form id="loginGame">
+					<div class="row">
+						<div class="left">
+							<label>Userame</label>
+						</div>
+						<div class="right">
+							<input id="usernameL" name="usernameL" type="text"/><br><br>
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label>Password</label>
+						</div>
+						<div class="right">
+							<input id="passwordL" name="passwordL" type="password"/><br><br>
+						</div>
+					</div>
+					<input id="submitL" type="submit" value="Login" name="submitL">
 				</form>
 			</div>
 			<div id="about" class="modal">
@@ -134,36 +170,86 @@
 			</div>
 			<div id="settings">
 				<form id="Settings-game">
-					<label for="demo">button up:</label>
-					<input type="text" id="upKey" size="10" onkeydown="updateUpButton(event)">
-					<p id="demo1"></p>
-					<label for="demo">button down:</label>
-					<input type="text" id="downKey" size="10" onkeydown="updateDownButton(event)">
-					<p id="demo2"></p>
-					<label for="demo">button right:</label>
-					<input type="text" id="rightKey" size="10" onkeydown="updateRightButton(event)">
-					<p id="demo3"></p>
-					<label for="demo">button left:</label>
-					<input type="text" id="leftKey" size="10" onkeydown="updateLeftButton(event)">
-					<p id="demo4"></p>
-					<label for="quantity">Numbers of balls (between 50 and 90):</label>
-					<input type="number" id="quantity" name="quantity">
-					<p></p>
-					<label> a color for the 5 points ball:</label>
-					<input type="color" id="myColor5" value="#1153ee">
-					<p></p>
-					<label> a color for the 15 points ball:</label>
-					<input type="color" id="myColor15" value="#41fd02">
-					<p></p>
-					<label> a color for the 25 points ball:</label>
-					<input type="color" id="myColor25" value="#ff0000">
-					<p></p>
-					<label for="timeGame">Time (minemum 60):</label>
-					<input type="number" id="timeGame" name="timeGame">
-					<p></p>
-					<label for="NumbersOfMonsters">Numbers of monsters (between 1 and 4):</label>
-					<input type="number" id="NumbersOfMonsters" name="NumbersOfMonsters">
-					<p></p>
+					<div class="row">
+						<div class="left">
+							<label for="demo">Button up:</label>
+						</div>
+						<div class="right">
+							<input type="text" id="upKey" size="10" onkeydown="updateUpButton(event)">
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label for="demo">Button down:</label>
+						</div>
+						<div class="right">
+							<input type="text" id="downKey" size="10" onkeydown="updateDownButton(event)">
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label for="demo">Button right:</label>
+						</div>
+						<div class="right">
+							<input type="text" id="rightKey" size="10" onkeydown="updateRightButton(event)">
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label for="demo">Button left:</label>
+						</div>
+						<div class="right">
+							<input type="text" id="leftKey" size="10" onkeydown="updateLeftButton(event)">
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label for="quantity">Numbers of balls:</label>
+						</div>
+						<div class="right">
+							<input type="number" id="quantity" name="quantity">
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label> Color for the 5 points ball:</label>
+						</div>
+						<div class="right">
+							<input type="color" id="myColor5" value="#1153ee">
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label> Color for the 15 points ball:</label>
+						</div>
+						<div class="right">
+							<input type="color" id="myColor15" value="#41fd02">
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label> Color for the 25 points ball:</label>
+						</div>
+						<div class="right">
+							<input type="color" id="myColor25" value="#ff0000">
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label for="timeGame">Time:</label>
+						</div>
+						<div class="right">
+							<input type="number" id="timeGame" name="timeGame">
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<label for="NumbersOfMonsters">Numbers of monsters:</label>
+						</div>
+						<div class="right">
+							<input type="number" id="NumbersOfMonsters" name="NumbersOfMonsters">
+						</div>
+					</div>
 					<input id="startGame" name="startGame" type="submit" value="Start game"/>
 					<input id="random"  type="button" value="Random values" onclick="randomValues()"/>
 				</form>

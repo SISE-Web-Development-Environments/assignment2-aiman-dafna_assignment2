@@ -25,9 +25,9 @@ var maxPoints;
 var moveMonster;
 var userConnected;
 var beginPoint = new Object();
+var hourglass;
 var divs = ["settings", "gameBoard", "welcome", "register", "login", "about"]
 var buttonsKeyboard = {Up: 38, Down: 40, Right: 39, Left: 37};
-var counterBalls5,counterBalls15,counterBalls25;
 var mySound;
 var myMusic;
 var deathSound;
@@ -58,7 +58,6 @@ $(document).ready(function() {
 	document.getElementById("leftKey").value = "ArrowLeft";
 
 	$("#register-form").validate({
-		errorPlacement: function errorPlacement(error, element) { element.after(error); },
 		rules: {
 			usernameR: {
 				required: true
@@ -111,7 +110,6 @@ $(document).ready(function() {
 		}
 	});
 	$("#Settings-game").validate({
-		errorPlacement: function errorPlacement(error, element) { element.after(error); },
 		rules: {
 			upKey: {
 				required: true
@@ -169,6 +167,24 @@ $(document).ready(function() {
 			}
 		}
 	});
+	$("#loginGame").validate({
+		rules: {
+			usernameL: {
+				required: true
+			},
+			passwordL: {
+				required: true
+			}
+		},
+		messages: {
+			usernameL: {
+				required: "Please enter your username"
+			},
+			passwordL: {
+				required: "Please enter your password"
+			}
+		}
+	});
 	$('#register-form').submit(function (e) {
 		e.preventDefault();
 		if ($('#register-form').valid()){
@@ -194,30 +210,37 @@ $(document).ready(function() {
 			Start();
 		}
 	});
+
+	$('#loginGame').submit(function (e) {
+		e.preventDefault();
+		if ($('#loginGame').valid()){
+			var username,password,user;
+			username = $("#usernameL").val();
+			password = $("#passwordL").val();
+			var userExist = false;
+			for(var i=0;i<users.length;i++){
+				if(users[i].username === username){
+					userExist = true;
+					if(users[i].password === password){
+						userConnected = username;
+						showDiv("settings");
+					}
+					else{
+						window.alert("wrong password")
+						break;
+					}
+				}
+			}
+			if(!userExist){
+				window.alert("wrong username")
+			}
+		}
+	});
 });
 
 //LOGIN
 function loginUser(){
-	var username,password,user;
-	username = $("#usernameL").val();
-	password = $("#passwordL").val();
-	var userExist = false;
-	for(var i=0;i<users.length;i++){
-		if(users[i].username === username){
-			userExist = true;
-			if(users[i].password === password){
-				userConnected = username;
-				showDiv("settings");
-			}
-			else{
-				window.alert("wrong password")
-				break;
-			}
-		}
-	}
-	if(!userExist){
-		window.alert("wrong username")
-	}
+	
 }
 
 function randomValues(){
@@ -329,7 +352,7 @@ function sound(src) {
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
     this.play = function(){
-        this.sound.play();
+        //this.sound.play();
     }
     this.stop = function(){
         this.sound.pause();
@@ -338,6 +361,11 @@ function sound(src) {
 
 function Start() {
 	cherryEaten = false;
+	hourglass = new Object();
+	hourglass.img = new Image();
+	hourglass.img.src = "hourglass.gif";
+	hourglass.show = false;
+	hourglass.eaten = false;
 	cherryImg = new Image();
 	cherryImg.src = "cherry.png";
 	myMusic = new sound("startSounds.mp3");
@@ -349,7 +377,7 @@ function Start() {
 	document.getElementById("numBall").innerHTML = numberOfBalls;
 	document.getElementById("showTime").innerHTML = time;
 	document.getElementById("showMonster").innerHTML = numberOfMonsters;
-	myMusic.play();
+	//myMusic.play();
 	maxPoints = 50;
 	moveMonster = 0;
 	pacMove = 4;
@@ -363,9 +391,6 @@ function Start() {
 	board = new Array();
 	score = 0;
 	lives = 5;
-	counterBalls5=0;
-	counterBalls15=0;
-	counterBalls25=0;
 	pac_color = "yellow";
 	var cnt = 250;
 	var food_remain = numberOfBalls;
@@ -468,11 +493,20 @@ function Start() {
 			foundCherry = true;
 		}
 	}
+	var foundHourglass = false;
+	while(!foundHourglass){
+		var emptyCell = findRandomEmptyCell(board);
+		if(!((emptyCell[1] == 0 || emptyCell[1] == 9 || emptyCell[0] == 0 || emptyCell[0] == 24))){
+			hourglass.i = emptyCell[0];
+			hourglass.j = emptyCell[1];
+			foundHourglass = true;
+		}
+	}
 	var dazzle=new Object();
 	dazzle.img = new Image();
 	dazzle.img.src = 'dazzled.svg';
-	dazzle.i=12;
-	dazzle.j=5;
+	dazzle.i = 24;
+	dazzle.j = 9;
 	monsters.push(dazzle);
 	keysDown = {};
 	addEventListener(
@@ -625,6 +659,10 @@ function Draw() {
 	if(!cherryEaten){
 		context.drawImage(cherryImg, cherry.i * 50 + 10, cherry.j * 50 + 5);
 	}
+
+	if(hourglass.show && !hourglass.eaten){
+		context.drawImage(hourglass.img, hourglass.i * 50 + 3, hourglass.j * 50 + 5);
+	}
 }
 
 function checkMonsterCollision(x, y){
@@ -721,6 +759,23 @@ function UpdatePosition() {
 	if(x){
 		pacMove = x;
 	}
+	var rnd = Math.random();
+	if(!hourglass.show && rnd < 0.015 && !hourglass.eaten){
+		hourglass.show = true;
+		hourglass.start_time = time_elapsed;
+	}
+	if(hourglass && time_elapsed - hourglass.start_time >= 10){
+		hourglass.show = false;
+		var foundHourglass = false;
+		while(!foundHourglass){
+			var emptyCell = findRandomEmptyCell(board);
+			if(!((emptyCell[1] == 0 || emptyCell[1] == 9 || emptyCell[0] == 0 || emptyCell[0] == 24))){
+				hourglass.i = emptyCell[0];
+				hourglass.j = emptyCell[1];
+				foundHourglass = true;
+			}
+		}
+	}
 	moveMonster++;
 	if(moveMonster % 4 == 0){
 		moveMonsters();
@@ -741,7 +796,7 @@ function UpdatePosition() {
 				monsters[i].j = 0;
 			}
 		}
-		deathSound.play();
+		//deathSound.play();
 		lives--;
 		moveMonster = 0;
 		score -= 10;
@@ -770,20 +825,23 @@ function UpdatePosition() {
 		}
 	}
 	if (board[shape.i][shape.j] == 1) {
-		mySound.play();
+		//mySound.play();
 		score += 5;
 	}
 	else if (board[shape.i][shape.j] == 5) {
-		mySound.play();
+		//mySound.play();
 		score += 15;
 	}
 	else if (board[shape.i][shape.j] == 6) {
-		mySound.play();
+		//mySound.play();
 		score += 25;
 	}
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
+	if(hourglass.eaten){
+		time_elapsed -= 20;
+	}
 	
 	if(Math.floor(time - time_elapsed) == 0){
 		stopTimer();
@@ -798,8 +856,13 @@ function UpdatePosition() {
 		score += 50;
 		cherryEaten = true;
 	}
+
+	if(hourglass.show && !hourglass.eaten && hourglass.i == shape.i && hourglass.j == shape.j){
+		hourglass.eaten = true;
+		hourglass.show = false;
+	}
 	if(lives <= 0){
-		deathSound.play();
+		//deathSound.play();
 		stopTimer();
 		Draw();
 		window.alert("Loser!");

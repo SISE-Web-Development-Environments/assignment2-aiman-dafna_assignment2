@@ -7,7 +7,6 @@ body{
     flex: 1;
     text-align: right;
 }
-
 .logo{
     flex: 0 0 70%;
     margin-left: 15%;
@@ -41,13 +40,14 @@ body{
     width: 100%;
     left: 0px;
     height: 30px;
+    top: 90px;
     background-color: rgb(166, 238, 241);
 }
 
 .menuLabel{
-    vertical-align: bottom;
     font-size: medium;
-
+    display: block;
+    margin-top: 5px;
 }
 
 .divLabel{
@@ -89,23 +89,83 @@ body{
     display: inline-block;
     font-size: 16px;
 }
+
 #pregister{
     text-align: center;
 }
 
-#register-form{
-    margin-top: 5%;
+#register-form, #loginGame{
+    margin-top: 7.5%;
+}
+
+#Settings-game{
+    margin-top: 1%;
 }
 
 #register label{
-    margin-right: 2%;
     margin-left: 40%;
+    font-size: 18px;
+    padding: 6px 12px 12px 0;
+    display: inline-block;
 }
 
-#submitR{
-    width: 8%;
-    margin-left: 46%;
-    margin-right: 46%;
+#loginGame label, #Settings-game label{
+    font-size: 18px;
+    padding: 6px 6px 6px 0;
+    display: inline-block;
+}
+
+#register input, #loginGame input, #Settings-game input{
+    width: 150px;
+    float: left;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.left{
+    float: left;
+    width: 15%;
+    margin-top: 6px;
+    margin-left: 35%;
+}
+
+.right{
+    float: left;
+    width: 50%;
+    margin-top: 13px;
+}
+
+#submitR, #submitL, #startGame{
+    margin-top: 2%;
+    width: 100px;
+    height: 35px;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(166, 238, 241);
+    margin-left: 45%;
+}
+
+#resetB{
+    width: 100px;
+    height: 35px;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(166, 238, 241);
+}
+
+#startGame{
+    margin-left: 36%;
+}
+
+#random{
+    width: 100px;
+    margin-top: 2%;
+    height: 35px;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(166, 238, 241);
+    margin-left: 2%;
 }
 
 #loginB{
@@ -204,4 +264,11 @@ canvas{
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.error{
+    float: left;
+    color: red;
+    font-size: small;
+    margin-left: 0%;
 }
