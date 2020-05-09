@@ -32,11 +32,14 @@ var mySound;
 var myMusic;
 var deathSound;
 var interval;
+
+//add method to check if the password is valid
 $.validator.addMethod("checkPassword", function(value){
 		return (/\d/.test(value) && /^[A-Za-z0-9\d=!\-@._*]+$/.test(value) && (/[a-z]/.test(value) || /[A-Z]/.test(value)))
 	}
 );
 
+//add method to check us strung contains only letters
 $.validator.addMethod("onlyLetters", function(value){
 	return /^[A-Za-z]+$/i.test(value); 
 }
@@ -44,19 +47,20 @@ $.validator.addMethod("onlyLetters", function(value){
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
-	var userA = new Object();
+	var userA = new Object();//add special user p
 	userA.username = "p";
 	userA.password = "p";
 	users.push(userA);
 	for(var i = 0; i < divs.length; i++){
-		document.getElementById(divs[i]).style.display="none";
+		document.getElementById(divs[i]).style.display="none";//hide all divs
 	}
-	document.getElementById("welcome").style.display="block";
+	document.getElementById("welcome").style.display="block";//show welcome div
+	//set default keys for the game
 	document.getElementById("upKey").value = "ArrowUp";
 	document.getElementById("downKey").value = "ArrowDown";
 	document.getElementById("rightKey").value = "ArrowRight";
 	document.getElementById("leftKey").value = "ArrowLeft";
-
+	//validate the register form
 	$("#register-form").validate({
 		rules: {
 			usernameR: {
@@ -109,6 +113,7 @@ $(document).ready(function() {
 			}
 		}
 	});
+	//validate setting form 
 	$("#Settings-game").validate({
 		rules: {
 			upKey: {
@@ -167,6 +172,7 @@ $(document).ready(function() {
 			}
 		}
 	});
+	//validate login form
 	$("#loginGame").validate({
 		rules: {
 			usernameL: {
@@ -185,6 +191,7 @@ $(document).ready(function() {
 			}
 		}
 	});
+	//handle submit of register form
 	$('#register-form').submit(function (e) {
 		e.preventDefault();
 		if ($('#register-form').valid()){
@@ -196,7 +203,7 @@ $(document).ready(function() {
 			sign_up_success();
 		}
 	});
-
+	//handle submit of setting form 
 	$('#Settings-game').submit(function (e) {
 		e.preventDefault();
 		if ($('#Settings-game').valid()){
@@ -210,7 +217,7 @@ $(document).ready(function() {
 			Start();
 		}
 	});
-
+	//handle submit of login form
 	$('#loginGame').submit(function (e) {
 		e.preventDefault();
 		if ($('#loginGame').valid()){
@@ -238,11 +245,7 @@ $(document).ready(function() {
 	});
 });
 
-//LOGIN
-function loginUser(){
-	
-}
-
+//this function sets random values for the setting form and sets keys to the default
 function randomValues(){
 	buttonsKeyboard.Up = 38;
 	buttonsKeyboard.Down = 40; 
@@ -264,10 +267,12 @@ function randomValues(){
 	document.getElementById("NumbersOfMonsters").value = getRndInteger(1, 4);
 }
 
+//this function returns a random number between min and max 
 function getRndInteger(min, max) {
 	return Math.floor(Math.random() * (max - min) ) + min;
 }
 
+//this function returns a random color 
 function randomColor() {
 	var color ="#";
 	for(var i = 0; i < 6; i++){
@@ -297,6 +302,7 @@ function randomColor() {
 	return color;
 }
 
+//update the up button of the game
 function updateUpButton(event) {
 	var x = event.key;
 	document.getElementById("upKey").value = x;
@@ -304,6 +310,7 @@ function updateUpButton(event) {
 	buttonsKeyboard.Up = event.keyCode;
 }
 
+//update the down button of the game
 function updateDownButton(event) {
 	var x = event.key;
 	document.getElementById("downKey").value = x;
@@ -311,6 +318,7 @@ function updateDownButton(event) {
 	buttonsKeyboard.Down = event.keyCode;
 }
 
+//update the right button of the game
 function updateRightButton(event) {
 	var x = event.key;
 	document.getElementById("rightKey").value = x;
@@ -318,6 +326,7 @@ function updateRightButton(event) {
 	buttonsKeyboard.Right = event.keyCode;
 }
 
+//update the left button of the game
 function updateLeftButton(event) {
 	var x = event.key;
 	document.getElementById("leftKey").value = x;
@@ -325,6 +334,7 @@ function updateLeftButton(event) {
 	buttonsKeyboard.Left = event.keyCode;
 }
 
+//show only the div wanted and hide all others
 function showDiv(divName){
 	if(interval){
 		stopTimer();
@@ -336,14 +346,18 @@ function showDiv(divName){
 	selected.style.display="block";
 }
 
+//alert the user that the sign up was successful
 function sign_up_success(){
 	window.alert("successed!");
 	showDiv("settings");
 }
 
+//stop the interval
 function stopTimer(){
 	window.clearInterval(interval);
-} 
+}
+
+//set a sound
 function sound(src) {
     this.sound = document.createElement("audio");
     this.sound.src = src;
@@ -352,13 +366,14 @@ function sound(src) {
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
     this.play = function(){
-        //this.sound.play();
+        this.sound.play();
     }
     this.stop = function(){
         this.sound.pause();
     }    
 }
 
+//set up the game
 function Start() {
 	cherryEaten = false;
 	hourglass = new Object();
@@ -377,7 +392,7 @@ function Start() {
 	document.getElementById("numBall").innerHTML = numberOfBalls;
 	document.getElementById("showTime").innerHTML = time;
 	document.getElementById("showMonster").innerHTML = numberOfMonsters;
-	//myMusic.play();
+	myMusic.play();
 	maxPoints = 50;
 	moveMonster = 0;
 	pacMove = 4;
@@ -398,8 +413,8 @@ function Start() {
 	start_time = new Date();
 	for (i = 0; i < 25; i++) {
 		board[i] = new Array();
-		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 10; j++) {
+			//put obstacles 
 			if (
 				(i == 2 && j == 1)  || (i == 3 && j == 1)  || (i == 18 && j == 1) || (i == 19 && j == 1) ||
 				(i == 20 && j == 1) || (i == 21 && j == 1) || (i == 9 && j == 2)  || (i == 21 && j == 2) ||
@@ -411,7 +426,8 @@ function Start() {
 				(i == 5 && j == 8)  || (i == 20 && j == 8) 
 			) {
 				board[i][j] = 4;
-			} else {
+			} 
+			else {
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
 					food_remain--;
@@ -470,6 +486,7 @@ function Start() {
 			beginPoint.j = emptyCell[1];
 		}
 	}
+	//set monsters locations
 	for(i = 0; i <numberOfMonsters-1; i++){
 		var mon = new Object()
 		mon.i = 24 * (i % 2);
@@ -483,6 +500,7 @@ function Start() {
 		mon.img.src = "monster" + (i+1) + ".png";
 		monsters.push(mon);
 	}
+	//set cherry location
 	var foundCherry = false;
 	cherry = new Object();
 	while(!foundCherry){
@@ -493,6 +511,7 @@ function Start() {
 			foundCherry = true;
 		}
 	}
+	//set hourglass location
 	var foundHourglass = false;
 	while(!foundHourglass){
 		var emptyCell = findRandomEmptyCell(board);
@@ -648,23 +667,27 @@ function Draw() {
 			}
 		}
 	}
+	//draw monsters
 	for(i = 0; i < monsters.length; i++){
-		if(i == monsters.length-1){
+		if(i == monsters.length - 1){
 			context.drawImage(monsters[i].img, monsters[i].i * 50 + 5, monsters[i].j *50 + 10,40,40);
 		}
 		else{
 			context.drawImage(monsters[i].img, monsters[i].i * 50 + 5, monsters[i].j *50 + 10);
 		}
 	}
+	//draw cherry
 	if(!cherryEaten){
 		context.drawImage(cherryImg, cherry.i * 50 + 10, cherry.j * 50 + 5);
 	}
-
+	//draw hourglass
 	if(hourglass.show && !hourglass.eaten){
 		context.drawImage(hourglass.img, hourglass.i * 50 + 3, hourglass.j * 50 + 5);
 	}
 }
 
+
+//check if in a position there is a monster
 function checkMonsterCollision(x, y){
 	for(var i = 0; i < monsters.length; i++){
 		if(monsters[i].i == x && monsters[i].j == y){
@@ -674,28 +697,34 @@ function checkMonsterCollision(x, y){
 	return false;
 }
 
+//open the about modal
 function openAbout(){
 	document.getElementById("about").style.display = "block";
 }
 
+//close the about model
 function closeAbout(){
 	document.getElementById("about").style.display = "none";
 }
 
+//close the about modal if pressed esc
 $(document).keydown(function(event) { 
 	if (event.keyCode == 27) { 
 		document.getElementById("about").style.display = "none";
 	}
 });
 
+//close the about modal if clicked outside of the modal
 window.onclick = function(event) {
 	if (event.target == document.getElementById("about")) {
 		document.getElementById("about").style.display = "none";
 	}
 }
 
+//return possible moves of the monsters so there are no collisions with other monsers
 function getPossibleMoves(x, y){
 	var moves = [];
+	//if monster is in the same line as the pacman move towards him
 	if(x == shape.i){
 		var diff = y - shape.j;
 		if(diff >= 0 && board[x][y - 1] != 4){
@@ -733,17 +762,19 @@ function getPossibleMoves(x, y){
 	return moves;
 }
 
+//moves all monsters
 function moveMonsters(){
 	for(var i = 0; i < monsters.length; i++){
 		var moves = getPossibleMoves(monsters[i].i, monsters[i].j);
 		if(moves.length > 0){
-			var random = getRndInteger(0, moves.length);
+			var random = getRndInteger(0, moves.length);//choose a random direction
 			monsters[i].i = moves[random].i;
 			monsters[i].j = moves[random].j;
 		}
 	}
 }
 
+//moves the cherry randomly 
 function moveCherry(){
 	var moves = getPossibleMoves(cherry.i, cherry.j);
 	if(moves.length > 0){
@@ -757,16 +788,19 @@ function UpdatePosition() {
 	board[shape.i][shape.j] = 0;
 	var x = GetKeyPressed();
 	if(x){
-		pacMove = x;
+		pacMove = x;//save the direction of the pacman
 	}
+	//randomly check if to show the hourglass
 	var rnd = Math.random();
 	if(!hourglass.show && rnd < 0.015 && !hourglass.eaten){
 		hourglass.show = true;
 		hourglass.start_time = time_elapsed;
 	}
+	//count 10 seconds to show hourglass 
 	if(hourglass && time_elapsed - hourglass.start_time >= 10){
 		hourglass.show = false;
 		var foundHourglass = false;
+		//find new position to the hourglass
 		while(!foundHourglass){
 			var emptyCell = findRandomEmptyCell(board);
 			if(!((emptyCell[1] == 0 || emptyCell[1] == 9 || emptyCell[0] == 0 || emptyCell[0] == 24))){
@@ -781,6 +815,7 @@ function UpdatePosition() {
 		moveMonsters();
 		moveCherry();
 	}
+	//check if pacman is eaten by a monster
 	if(checkMonsterCollision(shape.i, shape.j)){
 		if(shape.i == monsters[monsters.length - 1].i && shape.j == monsters[monsters.length - 1].j){
 			lives--;
@@ -796,7 +831,7 @@ function UpdatePosition() {
 				monsters[i].j = 0;
 			}
 		}
-		//deathSound.play();
+		deathSound.play();
 		lives--;
 		moveMonster = 0;
 		score -= 10;
@@ -804,6 +839,7 @@ function UpdatePosition() {
 		shape.i = beginPoint.i;
 		shape.j = beginPoint.j;
 	}
+	//move pacman
 	if (x == 1) {
 		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
 			shape.j--;
@@ -824,16 +860,17 @@ function UpdatePosition() {
 			shape.i++;
 		}
 	}
+	//add score if pacman has eaten a candy
 	if (board[shape.i][shape.j] == 1) {
-		//mySound.play();
+		mySound.play();
 		score += 5;
 	}
 	else if (board[shape.i][shape.j] == 5) {
-		//mySound.play();
+		mySound.play();
 		score += 15;
 	}
 	else if (board[shape.i][shape.j] == 6) {
-		//mySound.play();
+		mySound.play();
 		score += 25;
 	}
 	board[shape.i][shape.j] = 2;
@@ -842,7 +879,6 @@ function UpdatePosition() {
 	if(hourglass.eaten){
 		time_elapsed -= 20;
 	}
-	
 	if(Math.floor(time - time_elapsed) == 0){
 		stopTimer();
 		if(score < 100){
@@ -852,17 +888,18 @@ function UpdatePosition() {
 			window.alert("Winner!!!");
 		}
 	}
+	//check if pacman has eaten the cherry
 	if(!cherryEaten && cherry.i == shape.i && cherry.j == shape.j){
 		score += 50;
 		cherryEaten = true;
 	}
-
+	//check if pacman has eaten the hourglass
 	if(hourglass.show && !hourglass.eaten && hourglass.i == shape.i && hourglass.j == shape.j){
 		hourglass.eaten = true;
 		hourglass.show = false;
 	}
 	if(lives <= 0){
-		//deathSound.play();
+		deathSound.play();
 		stopTimer();
 		Draw();
 		window.alert("Loser!");
